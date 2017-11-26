@@ -10,24 +10,34 @@ class BLP():
     ----------
     data : object
         Object containing data for estimation. It should contain:
-        v  : Random draws given for the estimation with (T by ns*(k1+k2)) dimension
-        D  : Demeaned draws of demographic variables with (T by ns*D) dimension
-        X1 : The variables that vary over products and markets and have random coefficient 
-             (J*T by k1) dimension
-        X2 : The variables that only vary over products and do not change from market 
-             to market and have a random coefficient 
-             (J*T by k2) dimension
-        X3 : The variables that vary over products and markets and do not have a 
-             random coefficient
-             (J*T by k3) dimension
-        prod_d : product/brand dummies
-             (J*T by J) dimension
-        Z  : Instruments with (J*T by K) dimension 
-        s_jt: Observed market shares (J*T by 1) dimension 
+        v  :     Random draws given for the estimation with (T by ns*(k1+k2)) dimension
+        demogr:  Demeaned draws of demographic variables with (T by ns*D) dimension
+        X1 :     The variables that vary over products and markets and have random coefficient 
+                 (TJ by k1) dimension
+        X2 :     The variables that only vary over products and do not change from market 
+                 to market and have a random coefficient (TJ by k2) dimension
+        X3 :     The variables that vary over products and markets and do not have a 
+                 random coefficient (TJ by k3) dimension
+
+        prod_d : Product/brand dummies (TJ by J) dimension
+        Z  :     Instruments with (TJ by K) dimension 
+        s_jt:    Observed market shares (TJ by 1) dimension 
+        cdindex: Index of the last observation for a market (T by 1)
+        cdid:    Vector of market indexes (TJ by 1)
+        
+        X1_names, X2_names, X3_names, D_names: names of variables from X1, X2, X3 
+                 and demographic variables respectively
+        
+        theta2w: Starting values
+        
+        x1 = [X1, X2]: variables enter the linear part of the estimation
+        x2 = [X1, X3]: variables enter the non-linear part
+        TJ is number of observations (TJ = T*J if all products are observed in all markets)
+        
         """
             
     def __init__(self,data):      
-        # x1 variables enter the linear part of the estimation
+        # x1 variables enter the linear part of the estimation: X1, X3
         self.x1 = data.x1
         
         # x2 variables enter the non-linear part: X1, X2
@@ -45,7 +55,7 @@ class BLP():
         self.cdid = data.cdid
 
         self.vfull = self.v[self.cdid,:]
-        self.dfull = data.dfull
+        self.dfull = data.demogr[self.cdid,:]
         
         # instrumental variables including exogenous variables from x1
         self.IV = data.IV
@@ -60,7 +70,7 @@ class BLP():
         self.K2 = self.x2.shape[1]
         self.ns = int(self.v.shape[1]/self.K2)          # number of simulated "indviduals" per market 
         self.D = int(self.dfull.shape[1]/self.ns)       # number of demographic variables
-        self.T = self.cdindex.shape[0]                        # number of markets = (# of cities)*(# of quarters)  
+        self.T = self.cdindex.shape[0]                  # number of markets = (# of cities)*(# of quarters)  
         self.TJ = self.x1.shape[0]
         self.J = int(self.TJ/self.T)
                 

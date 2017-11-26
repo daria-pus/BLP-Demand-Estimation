@@ -58,7 +58,6 @@ class Data(object):
         # income squared, columns 41 through 60 are age and 61 through 80 are a
         # child dummy variable. 
         self.demogr = ps2['demogr']
-        self.dfull = self.demogr[self.cdid,:]
         
         
         self.IV = np.matrix(np.concatenate((iv['iv'][:, 1:], self.x1[:, 1:].todense()), 1))
