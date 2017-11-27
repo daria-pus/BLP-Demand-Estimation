@@ -214,10 +214,6 @@ class BLP():
         for i in range(self.T):
             temp = shares[n:(self.cdindex[i] + 1), :]
             H1 = temp @ temp.T
-            #H = (H1-np.diag(np.array(sum(temp.T)).flatten())) / self.ns 
-            #neg_diag = np.ones(H.shape)
-            #np.fill_diagonal(neg_diag, -1)
-            #H = np.multiply(H, neg_diag)
             H = (np.diag(np.array(sum(temp.T)).flatten())-H1) / self.ns
             f[n:(self.cdindex[i]+1), :] = np.linalg.inv(H) @ f1[n:(self.cdindex[i] + 1), self.rel]
             n = self.cdindex[i] + 1
@@ -316,17 +312,3 @@ if __name__ == '__main__':
                                    param_vec=init_theta,
                                    args=())
     blp.results(res)
-
-    
-    
-    
- 
-    
-
-    
-    
-    
-      
-    
-    
-    
