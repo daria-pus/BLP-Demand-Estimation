@@ -22,6 +22,7 @@ class BLP():
         s_jt:    Observed market shares (TJ by 1) dimension 
         cdindex: Index of the last observation for a market (T by 1)
         cdid:    Vector of market indexes (TJ by 1)
+        own:     ownership matrix
         
         p_index2: location of price in x2 
         
