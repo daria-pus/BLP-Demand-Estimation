@@ -4,7 +4,7 @@ Method of structural demand estimation using random-coefficients logit model of 
 I would like to thank Prof. Nevo for making his [MATLAB code](http://faculty.wcas.northwestern.edu/~ane686/supplements/rc_dc_code.htm) available, which this program is based on.
 
 The program consists of the following files:
-- **BLP notes.pdf** - file that explains motivation to use BLP, necessary data, model primitives, and estimation steps.
+- **BLP_notes.pdf** - file that explains motivation to use BLP, necessary data, model primitives, and estimation steps.
 - **BLP_demand.py** - main file that defines BLP class, and using Data class runs the model and outputs coefficient estimates, standard errors and value of objective function. 
 - **data_Nevo.py** - file that defines Data class for Nevo (2000b) replication.
 - **iv.mat**, **ps2.mat** -  data files for Nevo (2000b) replication.
